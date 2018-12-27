@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="ru-RU">
+<style class="in-text" version="1.0" name-delimiter=", " page-range-format="expanded" default-locale="ru-RU" xmlns="http://purl.org/net/xbiblio/csl">
   <!-- This style was edited with the Visual CSL Editor (http://editor.citationstyles.org/visualEditor/) -->
   <info>
-    <title>Russian GOST 7.1-2003 alpha (numeric, sorted alphabetically, Russian)</title>
-    <title-short>Russian GOST 7.1-2003 alpha (numeric, sorted alphabetically, Russian)</title-short>
+    <title>Russian GOST 7.1-2003 alpha</title>
+    <title-short>Russian GOST 7.1-2003 alpha</title-short>
     <id>http://www.zotero.org/styles/russian-gost-71-2003-alpha</id>
-    <link href="http://www.zotero.org/styles/russian-gost-71-2003-alpha" rel="self"></link>
+    <link href="http://www.zotero.org/styles/russian-gost-71-2003-alpha" rel="self"/>
     <link href="http://protect.gost.ru/document.aspx?control=7&amp;id=129865" rel="documentation"/>
     <link href="https://standartgost.ru/g/ГОСТ_7.1-2003" rel="documentation"/>
     <author>
@@ -15,19 +15,17 @@
       <name>Pavel Zhelnov</name>
       <uri>http://pussia.today</uri>
     </author>
-    <category citation-format="numeric"/>
-    <category field="generic-base"/>
-    <summary>Russian GOST 7.1-2003 style, alpha yet. Book, Article, and InProceedings tested only.</summary>
-    <updated>2018-12-25T20:54:03+00:00</updated>
+    <category citation-format="author-date"/>
+    <category field="medicine"/>
+    <summary>Russian GOST 7.1-2003 style, alpha yet. Book, Article, and InProceedings tested only as of yet, still not fully supported. Citations in author-date format. Labels, if PMID set, in English, else in Russian. Sorted alphabetically.</summary>
+    <updated>2018-12-27T03:29:15+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 License</rights>
   </info>
   <locale xml:lang="ru">
     <terms>
-      <term name="et-al"> [и др.].</term>
-      <term name="editor">под ред.</term>
-      <term name="accessed">дата обращения</term>
-      <term name="page" form="short">с.</term>
-      <term name="translator">перевод</term>
+      <term name="et-al"></term>
+      <term name="number">№</term>
+      <term name="and others">.</term>
     </terms>
   </locale>
   <macro name="editor">
@@ -88,34 +86,60 @@
     <text variable="citation-number" suffix=". "/>
   </macro>
   <macro name="author">
-    <names variable="author" delimiter="," prefix=" / ">
-      <name initialize-with="."/>
-      <label form="short" strip-periods="true"/>
+    <names variable="author" prefix=" / ">
+      <name initialize-with="." sort-separator=""/>
     </names>
   </macro>
   <macro name="author-first">
-    <names variable="author" delimiter=", ">
-      <name delimiter="; " delimiter-precedes-last="always" initialize-with="." name-as-sort-order="all"/>
-      <label form="short" strip-periods="true" prefix=" " suffix="."/>
+    <names variable="author" suffix=" ">
+      <name et-al-min="1" et-al-use-first="1" et-al-subsequent-use-first="1" et-al-use-last="true" initialize-with="." name-as-sort-order="all" sort-separator=", "/>
+    </names>
+    <names variable="author">
+      <name et-al-min="0" et-al-use-first="0"/>
     </names>
   </macro>
   <macro name="page">
-    <text variable="page" prefix=" — C. " suffix="."/>
+    <choose>
+      <if match="any" variable="page">
+        <choose>
+          <if match="any" variable="PMID">
+            <text value="— P. "/>
+          </if>
+          <else>
+            <text value="— С. "/>
+          </else>
+        </choose>
+        <text variable="page"/>
+      </if>
+    </choose>
   </macro>
   <macro name="container-title">
     <text variable="container-title" prefix=" // " suffix="."/>
   </macro>
   <macro name="volume-issue">
     <group prefix="— " suffix=".">
-      <text variable="volume" prefix="Т. "/>
       <choose>
         <if match="any" variable="volume">
-          <text variable="issue" prefix=", № "/>
+          <choose>
+            <if match="any" variable="PMID">
+              <text value="Vol. "/>
+            </if>
+            <else>
+              <text value="Т. "/>
+            </else>
+          </choose>
+        </if>
+      </choose>
+      <text variable="volume"/>
+      <choose>
+        <if match="any" variable="volume">
+          <text term="number" prefix=", " suffix=" "/>
         </if>
         <else>
-          <text variable="issue" prefix="№ "/>
+          <text term="number" suffix=" "/>
         </else>
       </choose>
+      <text variable="issue"/>
     </group>
   </macro>
   <macro name="year-date">
@@ -123,16 +147,32 @@
       <date-part name="year"/>
     </date>
   </macro>
+  <macro name="citation">
+    <text macro="author-citation" suffix=", "/>
+    <text macro="year-date"/>
+  </macro>
+  <macro name="author-citation">
+    <choose>
+      <if match="any" variable="PMID">
+        <names variable="author">
+          <name delimiter-precedes-et-al="never" delimiter-precedes-last="never" et-al-min="3" et-al-use-first="1" initialize-with="." name-as-sort-order="all" sort-separator=" "/>
+          <et-al term="and others" prefix="et al"/>
+        </names>
+      </if>
+      <else>
+        <names variable="author">
+          <name delimiter-precedes-et-al="never" delimiter-precedes-last="never" et-al-min="3" et-al-use-first="1" initialize-with="." name-as-sort-order="all" sort-separator=" "/>
+          <et-al term="and others" prefix="и соавт"/>
+        </names>
+      </else>
+    </choose>
+  </macro>
   <citation collapse="citation-number">
     <sort>
       <key variable="citation-number"/>
     </sort>
-    <layout prefix="[" suffix="]" delimiter=", ">
-      <text variable="citation-number"/>
-      <group prefix=",">
-        <label plural="never" prefix=" " variable="locator" form="short"/>
-        <text variable="locator" form="short" prefix=" "/>
-      </group>
+    <layout delimiter="; " prefix="(" suffix=")">
+      <text macro="citation"/>
     </layout>
   </citation>
   <bibliography>
@@ -143,7 +183,7 @@
     </sort>
     <layout suffix=".">
       <text macro="citation-number"/>
-      <text macro="author-first" suffix=" "/>
+      <text macro="author-first"/>
       <choose>
         <if type="book" match="any">
           <group>
@@ -152,10 +192,34 @@
               <text macro="author" suffix="."/>
               <text macro="editor"/>
               <text macro="translator"/>
-              <text variable="edition" prefix="— " suffix="-е изд."/>
+              <choose>
+                <if match="any" variable="edition">
+                  <text variable="edition" prefix="— "/>
+                  <choose>
+                    <if match="any" variable="PMID">
+                      <text value="ed."/>
+                    </if>
+                    <else>
+                      <text value="изд."/>
+                    </else>
+                  </choose>
+                </if>
+              </choose>
             </group>
             <text macro="publisher"/>
-            <text variable="number-of-pages" prefix=" — " suffix=" c."/>
+            <choose>
+              <if match="any" variable="page">
+                <text variable="page" prefix=" — " suffix=" "/>
+                <choose>
+                  <if match="any" variable="PMID">
+                    <text value="p."/>
+                  </if>
+                  <else>
+                    <text value="с."/>
+                  </else>
+                </choose>
+              </if>
+            </choose>
           </group>
         </if>
         <else-if type="chapter" match="any">
