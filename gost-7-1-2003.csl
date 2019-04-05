@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" name-delimiter=", " page-range-format="expanded" default-locale="ru-RU">
   <!-- This style was edited with the Visual CSL Editor (http://editor.citationstyles.org/visualEditor/) -->
   <info>
     <title>Russian GOST 7.1-2003</title>
     <title-short>GOST 7.1-2003</title-short>
     <id>http://www.zotero.org/styles/gost-7-1-2003</id>
-    <link href="https://www.zotero.org/styles/gost-7-1-2003" rel="self"/>
+    <link href="http://www.zotero.org/styles/russian-gost-71-2003" rel="self"/>
     <link href="http://protect.gost.ru/document.aspx?control=7&amp;id=129865" rel="documentation"/>
     <link href="https://standartgost.ru/g/ГОСТ_7.1-2003" rel="documentation"/>
     <author>
@@ -19,7 +19,7 @@
     <category citation-format="author-date"/>
     <category field="medicine"/>
     <summary>GOST 7.1-2003 style, beta, based on Russian GOST R 7.0.5-2008 (numeric, sorted alphabetically, Russian) by Dmitriy Rybakov. Book, Article, and InProceedings tested only as of yet, still not fully supported. Citations in author-date format. Labels, if PMID set, in English, else in Russian. Sorted alphabetically.</summary>
-    <updated>2019-01-09T13:59:47+00:00</updated>
+    <updated>2019-04-05T05:59:25+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 License</rights>
   </info>
   <locale xml:lang="ru">
@@ -51,6 +51,18 @@
   </macro>
   <macro name="title">
     <text variable="title"/>
+    <choose>
+      <if match="any" variable="DOI URL">
+        <choose>
+          <if match="none" variable="page">
+            <text value="[Электронный ресурс]" prefix=" "/>
+          </if>
+          <else-if match="none" is-numeric="page">
+            <text value="[Электронный ресурс]" prefix=" "/>
+          </else-if>
+        </choose>
+      </if>
+    </choose>
   </macro>
   <macro name="translator">
     <names variable="translator" delimiter="," suffix=",">
@@ -101,7 +113,7 @@
   </macro>
   <macro name="page">
     <choose>
-      <if match="any" variable="page">
+      <if match="any" is-numeric="page">
         <choose>
           <if match="any" variable="PMID">
             <text value="— P. "/>
@@ -112,6 +124,16 @@
         </choose>
         <text variable="page"/>
       </if>
+      <else>
+        <choose>
+          <if match="any" variable="DOI">
+            <text variable="DOI" prefix="— DOI: "/>
+          </if>
+          <else-if match="any" variable="URL">
+            <text variable="URL" prefix="— URL: "/>
+          </else-if>
+        </choose>
+      </else>
     </choose>
   </macro>
   <macro name="container-title">
@@ -133,12 +155,12 @@
       </choose>
       <text variable="volume"/>
       <choose>
-        <if match="any" variable="volume">
+        <if match="all" variable="volume issue">
           <text term="number" prefix=", " suffix=" "/>
         </if>
-        <else>
+        <else-if match="any" variable="issue">
           <text term="number" suffix=" "/>
-        </else>
+        </else-if>
       </choose>
       <text variable="issue"/>
     </group>
