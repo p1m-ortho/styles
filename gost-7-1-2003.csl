@@ -171,8 +171,8 @@
     </date>
   </macro>
   <macro name="citation">
-    <text macro="author-citation" suffix=", "/>
-    <text macro="year-date"/>
+    <text macro="author-citation" suffix=" "/>
+    <text macro="year-date" prefix="(" suffix=")"/>
   </macro>
   <macro name="author-citation">
     <choose>
