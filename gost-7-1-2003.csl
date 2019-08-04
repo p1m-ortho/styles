@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" name-delimiter=", " page-range-format="expanded" default-locale="ru-RU">
-  <!-- This style was edited with the Visual CSL Editor (http://editor.citationstyles.org/visualEditor/) -->
+  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
   <info>
     <title>Russian GOST 7.1-2003</title>
     <title-short>GOST 7.1-2003</title-short>
@@ -19,7 +19,7 @@
     <category citation-format="author-date"/>
     <category field="medicine"/>
     <summary>GOST 7.1-2003 style, beta, based on Russian GOST R 7.0.5-2008 (numeric, sorted alphabetically, Russian) by Dmitriy Rybakov. Book, Article, and InProceedings tested only as of yet, still not fully supported. Citations in author-date format. Labels, if PMID set, in English, else in Russian. Sorted alphabetically.</summary>
-    <updated>2019-04-05T05:59:25+00:00</updated>
+    <updated>2019-08-04T20:40:20+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 License</rights>
   </info>
   <locale xml:lang="ru">
@@ -179,7 +179,7 @@
       <if match="any" variable="PMID">
         <names variable="author">
           <name delimiter-precedes-et-al="never" delimiter-precedes-last="never" et-al-min="3" et-al-use-first="1" initialize-with="." name-as-sort-order="all" sort-separator=" "/>
-          <et-al term="and others" prefix="et al"/>
+          <et-al term="and others" prefix="и соавт"/>
         </names>
       </if>
       <else>
